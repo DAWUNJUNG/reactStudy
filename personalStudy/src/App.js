@@ -23,15 +23,15 @@ function App() {
         <h4>ReactBlog</h4>
       </div>
 
-      <button style={{display: "none"}} onClick={() => {
-        firstTitleToggle()
-      }}>글 수정
+      <button style={{display: "none"}} onClick={() => {firstTitleToggle()}}>글 수정
       </button>
 
       <div className="list">
-        <h4>{titleData.title1} <span onClick={() => {
-          setLike(likeCount + 1)
-        }}>👍</span> {likeCount} </h4>
+        <h4>
+          {titleData.title1}
+          <span onClick={() => {setLike(likeCount + 1)}}>👍</span>
+          {likeCount}
+        </h4>
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
