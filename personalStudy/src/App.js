@@ -18,18 +18,24 @@ function App() {
     })
   };
 
-  return (<div className="App">
+  return (
+    <div className="App">
       <div className="black-nav">
         <h4>ReactBlog</h4>
       </div>
 
-      <button style={{display: "none"}} onClick={() => {firstTitleToggle()}}>글 수정
+      <button style={{display: "none"}} onClick={() => {
+        firstTitleToggle()
+      }}>
+        글 수정
       </button>
 
       <div className="list">
         <h4>
           {titleData.title1}
-          <span onClick={() => {setLike(likeCount + 1)}}>👍</span>
+          <span onClick={() => {
+            setLike(likeCount + 1)
+          }}>👍</span>
           {likeCount}
         </h4>
         <p>2월 17일 발행</p>
@@ -39,7 +45,9 @@ function App() {
         <p>2월 17일 발행</p>
       </div>
       <div className="list">
-        <h4 onClick={() => {setModalState(!modalState)}}>{titleData.title3}</h4>
+        <h4 onClick={() => {
+          setModalState(!modalState)
+        }}>{titleData.title3}</h4>
         <p>2월 17일 발행</p>
       </div>
 
