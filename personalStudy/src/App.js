@@ -60,19 +60,49 @@ function App() {
                     'before': modalIndex?.current,
                     'current': index
                   });
-                }}>{rowData.title}</span>
-                <span onClick={() => {
-                  let tmp = [...contentData];
-                  tmp[index].likeCount = rowData.likeCount + 1;
-                  setContent(tmp);
-                }}>👍</span>
-                {rowData.likeCount}
+                }}>
+                    {rowData.title}
+                    <span onClick={(e) => {
+                        e.stopPropagation();
+
+                        let tmp = [...contentData];
+                        tmp[index].likeCount = rowData.likeCount + 1;
+                        setContent(tmp);
+                    }}>👍</span>
+                    {rowData.likeCount}
+                </span>
+                <span style={{paddingLeft: '20px'}}>
+                  <button onClick={() => {
+                      let tmp = [...contentData];
+                      tmp.splice(index, 1);
+                      setContent(tmp);
+                  }}>test</button>
+                </span>
               </h4>
               <p>{rowData.createdAt}</p>
             </div>
           )
         })
       }
+
+      <div>
+        <input type="text" id="newContentTitle"/>
+        <button onClick={() => {
+            const titleElement = document.getElementById('newContentTitle');
+            const today = new Date();
+
+            let tmp = [...contentData];
+            tmp.push({
+                    'title': titleElement.value,
+                    'content': '',
+                    'createdAt': (today.getMonth() + 1) + '월' + (today.getDay()) + '일 발행',
+                    'likeCount': 0
+            });
+            setContent(tmp);
+
+            titleElement.value = '';
+        }}>글 생성</button>
+      </div>
 
       {
         modalState ? <Modal data={contentData} index={modalIndex} modifyData={setContent}/> : null
