@@ -15,7 +15,7 @@ div {
 }
 
 .list {
-  padding-left: 20px;
+  padding: 0 0 20px 20px;
   text-align: left;
   border-bottom: 1px solid grey;
 }
@@ -25,4 +25,8 @@ div {
   padding: 20px;
   background: #eee;
   text-align: left;
+}
+
+.hide {
+  display: none;
 }
