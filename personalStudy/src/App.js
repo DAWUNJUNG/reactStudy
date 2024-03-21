@@ -71,15 +71,15 @@ function App() {
                     }}>👍</span>
                     {rowData.likeCount}
                 </span>
-                <span style={{paddingLeft: '20px'}}>
-                  <button onClick={() => {
-                      let tmp = [...contentData];
-                      tmp.splice(index, 1);
-                      setContent(tmp);
-                  }}>test</button>
-                </span>
               </h4>
               <p>{rowData.createdAt}</p>
+              <span>
+                  <button onClick={() => {
+                    let tmp = [...contentData];
+                    tmp.splice(index, 1);
+                    setContent(tmp);
+                  }}>삭제</button>
+              </span>
             </div>
           )
         })
