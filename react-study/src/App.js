@@ -31,6 +31,11 @@ function App() {
           첫번째 글 변경
           </span>
       </div>
+      <button onClick={() => {
+        let tmp = [...content]
+        tmp.sort((first, second) => first.title.toLowerCase() < second.title.toLowerCase() ? -1 : 1)
+        setContent(tmp)
+      }}>오름차순 정렬</button>
       <div className='list'>
         <h4>{content[0].title}
           <span onClick={() => {
@@ -48,8 +53,28 @@ function App() {
         <h4>{content[2].title}</h4>
         <p>2월 17일 발행</p>
       </div>
+
+      <TestComponent/>
+      <Modal/>
+
     </div>
-  )
+  );
 }
+
+const Modal = () => {
+  return (
+    <div className="modal">
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세내용</p>
+    </div>
+  );
+};
+
+const TestComponent = () => {
+  return (
+    <div>hello world!</div>
+  );
+};
 
 export default App
