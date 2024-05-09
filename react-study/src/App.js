@@ -1,80 +1,106 @@
-import logo from './logo.svg'
-import './App.css'
-import { useState } from 'react'
+import './App.css';
+import {useState} from 'react';
 
 function App() {
 
-  const [content, setContent] = useState([
+  const [contentData, setContent] = useState([
     {
       'title': '남자코트 추천',
-      'likeCount': 0,
+      'content': '남자코트는 알아서 찾아보시기 바랍니다',
+      'createdAt': '2월 17일 발행',
+      'likeCount': 0
     },
     {
       'title': '강남 우동맛집',
-      'likeCount': 0,
+      'content': '맛집은 너의 생각이 다 맛집이야',
+      'createdAt': '2월 17일 발행',
+      'likeCount': 0
     },
     {
-      'title': '파이썬독학',
-      'likeCount': 0,
-    },
-  ])
+      'title': '파이썬 독학',
+      'content': '파이썬은 독학하기 좋지 쉽잖아',
+      'createdAt': '2월 17일 발행',
+      'likeCount': 0
+    }
+  ]);
+  const [modalIndex, setModalIndex] = useState({current: null, before: null});
+  const [modalState, setModal] = useState(false);
+
+  const firstTitleToggle = () => {
+    setContent([
+      ...contentData,
+      contentData[0].title = (contentData[0].title === '남자코트 추천') ? '여자코트 추천' : '남자코트 추천'
+    ])
+  };
 
   return (
-    <div className='App'>
-      <div className='black-nav'>
+    <div className="App">
+      <div className="black-nav">
         <h4>ReactBlog</h4>
-        <span onClick={() => {
-          let tmp = { ...content }
-          tmp[0].title = (tmp[0].title === '남자코트 추천') ? '여자코트 추천' : '남자코트 추천'
-          setContent(tmp)
-        }}>
-          첫번째 글 변경
-          </span>
-      </div>
-      <button onClick={() => {
-        let tmp = [...content]
-        tmp.sort((first, second) => first.title.toLowerCase() < second.title.toLowerCase() ? -1 : 1)
-        setContent(tmp)
-      }}>오름차순 정렬</button>
-      <div className='list'>
-        <h4>{content[0].title}
-          <span onClick={() => {
-            let tmp = { ...content }
-            tmp[0].likeCount += 1
-            setContent(tmp)
-          }}>👍</span> {content[0].likeCount} </h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className='list'>
-        <h4>{content[1].title}</h4>
-        <p>2월 17일 발행</p>
-      </div>
-      <div className='list'>
-        <h4>{content[2].title}</h4>
-        <p>2월 17일 발행</p>
       </div>
 
-      <TestComponent/>
-      <Modal/>
+      <button style={{display: "none"}} onClick={() => {
+        firstTitleToggle()
+      }}>글 수정
+      </button>
+
+      {
+        contentData.map((rowData, index) => {
+          return (
+            <div className="list" key={index}>
+              <h4>
+                <span onClick={() => {
+                  if (modalIndex?.current === index && modalState) {
+                    setModal(false);
+                  } else if (!modalState) {
+                    setModal(true);
+                  }
+
+                  setModalIndex({
+                    'before': modalIndex?.current,
+                    'current': index
+                  });
+                }}>{rowData.title}</span>
+
+                <span onClick={() => {
+                  let tmp = [...contentData];
+                  tmp[index].likeCount = rowData.likeCount + 1;
+                  setContent(tmp);
+                }}>👍</span>
+                {rowData.likeCount}
+              </h4>
+              <p>{rowData.createdAt}</p>
+            </div>
+          )
+        })
+      }
+
+      {
+        modalState ? <Modal data={contentData} index={modalIndex} modifyData={setContent}/> : null
+      }
 
     </div>
   );
 }
 
-const Modal = () => {
+const Modal = (props) => {
   return (
     <div className="modal">
-      <h4>제목</h4>
-      <p>날짜</p>
-      <p>상세내용</p>
+      <h4>{props.data[props.index.current].title}</h4>
+      <p>{props.data[props.index.current].createdAt}</p>
+      <p>{props.data[props.index.current].content}</p>
+      <button onClick={() => {
+        if (props.index.current === 0) {
+          let tmp = [...props.data];
+          tmp[0].title = (props.data[0].title === '남자코트 추천') ? '여자코트 추천' : '남자코트 추천'
+          props.modifyData(tmp);
+        } else {
+          alert('1번이 아니면 수정 안됨 ㅅㄱ');
+        }
+      }}>글수정
+      </button>
     </div>
-  );
+  )
 };
 
-const TestComponent = () => {
-  return (
-    <div>hello world!</div>
-  );
-};
-
-export default App
+export default App;
